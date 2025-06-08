@@ -1,5 +1,12 @@
-from flask import Blueprint, request, jsonify
 from .lorenz import encrypt_with_chaos
+from flask import Blueprint, render_template, request, jsonify
+
+bp = Blueprint('main', __name__)
+
+@bp.route('/')
+def index():
+    return render_template('index.html')
+
 
 bp = Blueprint('routes', __name__)
 
@@ -15,3 +22,7 @@ def encrypt():
 
     result = encrypt_with_chaos(password)
     return jsonify(result)
+
+@bp.route('/')
+def index():
+    return render_template('index.html')
