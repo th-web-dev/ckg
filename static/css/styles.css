@@ -169,3 +169,13 @@ h1 {
 .code-container {
   height: 100vh;
 }
+
+.cli-log {
+    background-color: #111;
+    color: #0f0;
+    padding: 1em;
+    font-family: monospace;
+    border-radius: 8px;
+    white-space: pre-wrap;
+    box-shadow: 0 0 5px #0f0;
+}
