@@ -7,52 +7,88 @@
 <body>
 <h1>Willkommen bei ChaosCrypto</h1>
 <p>Dies ist eine Demo zur chaotischen Verschlüsselung.</p>
+<div class="main-container">
+    <div class="col">
+        <form autocomplete='off' class='form'>
+            <div class='control'>
+                <h1>
+                    Sign In
+                </h1>
+            </div>
+            <div class='control block-cube block-input'>
+                <input name='username' placeholder='Username' type='text'>
+                <div class='bg-top'>
+                    <div class='bg-inner'></div>
+                </div>
+                <div class='bg-right'>
+                    <div class='bg-inner'></div>
+                </div>
+                <div class='bg'>
+                    <div class='bg-inner'></div>
+                </div>
+            </div>
+            <div class='control block-cube block-input'>
+                <input name='password' placeholder='Password' type='password'>
+                <div class='bg-top'>
+                    <div class='bg-inner'></div>
+                </div>
+                <div class='bg-right'>
+                    <div class='bg-inner'></div>
+                </div>
+                <div class='bg'>
+                    <div class='bg-inner'></div>
+                </div>
+            </div>
+            <button class='btn block-cube block-cube-hover' type='submit'>
+                <div class='bg-top'>
+                    <div class='bg-inner'></div>
+                </div>
+                <div class='bg-right'>
+                    <div class='bg-inner'></div>
+                </div>
+                <div class='bg'>
+                    <div class='bg-inner'></div>
+                </div>
+                <div class='text'>
+                    Log In
+                </div>
+            </button>
+        </form>
+    </div>
+    <div class="col code-run">
+        <div class="code-container">
+            <div class="code-header">
+                <h1>
+                    Code
+                </h1>
+            </div>
+        </div>
+    </div>
+</div>
 
-<form autocomplete='off' class='form'>
-    <div class='control'>
-        <h1>
-            Sign In
-        </h1>
-    </div>
-    <div class='control block-cube block-input'>
-        <input name='username' placeholder='Username' type='text'>
-        <div class='bg-top'>
-            <div class='bg-inner'></div>
-        </div>
-        <div class='bg-right'>
-            <div class='bg-inner'></div>
-        </div>
-        <div class='bg'>
-            <div class='bg-inner'></div>
-        </div>
-    </div>
-    <div class='control block-cube block-input'>
-        <input name='password' placeholder='Password' type='password'>
-        <div class='bg-top'>
-            <div class='bg-inner'></div>
-        </div>
-        <div class='bg-right'>
-            <div class='bg-inner'></div>
-        </div>
-        <div class='bg'>
-            <div class='bg-inner'></div>
-        </div>
-    </div>
-    <button class='btn block-cube block-cube-hover' type='submit'>
-        <div class='bg-top'>
-            <div class='bg-inner'></div>
-        </div>
-        <div class='bg-right'>
-            <div class='bg-inner'></div>
-        </div>
-        <div class='bg'>
-            <div class='bg-inner'></div>
-        </div>
-        <div class='text'>
-            Log In
-        </div>
-    </button>
-</form>
+<script>
+    document.querySelector('form').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const username = document.querySelector('input[name="username"]').value;
+        const password = document.querySelector('input[name="password"]').value;
+
+        const response = await fetch('/encrypt', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        });
+
+        const data = await response.json();
+
+        const codeContainer = document.querySelector('.code-container');
+        codeContainer.innerHTML += `
+            <pre><code>Encrypted: ${JSON.stringify(data)}</code></pre>
+        `;
+    });
+</script>
 
 </body>
 </html>

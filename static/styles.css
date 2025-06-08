@@ -150,3 +150,22 @@ h1 {
 .credits a:hover {
   opacity: 1;
 }
+
+.main-container {
+  display: flex;
+  justify-content: center;
+
+}
+
+.col{
+  width: 50%;
+}
+
+.code-run {
+  background: black;
+  padding: 0 15px;
+}
+
+.code-container {
+  height: 100vh;
+}
