@@ -1,2 +1,6 @@
 flask
 gunicorn
+opensimplex
+numpy
+matplotlib
+noise
