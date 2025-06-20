@@ -12,5 +12,7 @@ def create_app():
         template_folder=templates_path,
         static_folder=static_path
     )
+    app.secret_key = os.urandom(24)
+
     app.register_blueprint(main_bp)
     return app
