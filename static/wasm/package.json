@@ -1,0 +1,15 @@
+{
+  "name": "chaoscrypto_noise",
+  "type": "module",
+  "version": "0.1.0",
+  "files": [
+    "chaoscrypto_noise_bg.wasm",
+    "chaoscrypto_noise.js",
+    "chaoscrypto_noise.d.ts"
+  ],
+  "main": "chaoscrypto_noise.js",
+  "types": "chaoscrypto_noise.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
