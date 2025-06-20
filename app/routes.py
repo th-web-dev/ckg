@@ -1,32 +1,44 @@
 from flask import Blueprint, render_template, request, jsonify
 from app.ciphers.factory import get_cipher
+from flask import session
+from app.memory import generate_noise_field_opensimplex
 
 bp = Blueprint('routes', __name__)
 
 
-@bp.route('/encrypt', methods=['POST'])
-def encrypt():
-    data = request.get_json()
-    cipher_name = data.get("method", "lorenz")
-    password = data.get("password")
-    token = data.get("token", "default_token")
-    coord = data.get("coord", [0, 0])  # Erwartet [x, y] als Liste
+@bp.route('/set-cipher', methods=['POST'])
+def set_cipher():
+    cipher = request.form.get('cipher', 'lorenz')
 
-    if not password:
-        return jsonify({'error': 'No password provided'}), 400
+    lines = [
+        f"> Request arrived at endpoint /set-cipher with data: {{'cipher': '{cipher}'}}",
+        f"> Ready to receive using {cipher.upper()} cipher"
+    ]
 
-    try:
-        cipher = get_cipher(cipher_name)
+    return jsonify({
+        "receiver_log": lines
+    })
 
-        if cipher_name == "lorenz":
-            result = cipher.encrypt(password, token=token, coord=tuple(coord))
-        else:
-            result = cipher.encrypt(password)
+@bp.route("/set-token", methods=["POST"])
+def set_token():
+    token = request.form.get("token")
+    session["token"] = token
 
-        return jsonify({"formatted": result["formatted"]})
+    log_lines = [
+        {"type": "line", "text": f"> Request arrived at endpoint /set-token with data:"},
+        {"type": "log", "text": f"{{'token': '{token}'}}"},
+        {"type": "line", "text": "> Token received securely..."},
+        {"type": "line", "text": f"> Noise field will be generated based on token..."},
+    ]
 
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+    # Generate Noise Field
+    field = generate_noise_field_opensimplex(token, size=100, scale=0.1)
+    first_row = field[0]
+    field_log = f"Field shape: {field.shape}\nFirst row:\n{first_row}"
+
+    log_lines.append({"type": "log", "text": field_log})
+
+    return jsonify({"receiver_log": log_lines})
 
 
 @bp.route('/')

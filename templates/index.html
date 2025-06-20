@@ -7,66 +7,81 @@
 <body>
 <h1>Willkommen bei ChaosCrypto</h1>
 <p>Dies ist eine Demo zur chaotischen Verschlüsselung.</p>
-<div class="main-container">
-    <div class="col">
-        <form autocomplete='off' class='form'>
-            <div class='control'>
-                <h1>
-                    Sign In
-                </h1>
-            </div>
-            <div class='control block-cube block-input'>
-                <input name='username' placeholder='Username' type='text'>
-                <div class='bg-top'>
-                    <div class='bg-inner'></div>
-                </div>
-                <div class='bg-right'>
-                    <div class='bg-inner'></div>
-                </div>
-                <div class='bg'>
-                    <div class='bg-inner'></div>
-                </div>
-            </div>
-            <div class='control block-cube block-input'>
-                <input name='password' placeholder='Password' type='password'>
-                <div class='bg-top'>
-                    <div class='bg-inner'></div>
-                </div>
-                <div class='bg-right'>
-                    <div class='bg-inner'></div>
-                </div>
-                <div class='bg'>
-                    <div class='bg-inner'></div>
-                </div>
-            </div>
-            <button class='btn block-cube block-cube-hover' type='submit'>
-                <div class='bg-top'>
-                    <div class='bg-inner'></div>
-                </div>
-                <div class='bg-right'>
-                    <div class='bg-inner'></div>
-                </div>
-                <div class='bg'>
-                    <div class='bg-inner'></div>
-                </div>
-                <div class='text'>
-                    Log In
-                </div>
+<div class="actions-bar">
+    <div class="action">
+        <form id="cipher-form" method="post" action="/set-cipher">
+            <select name="cipher" id="cipher-select">
+                <option value="lorenz">Lorenz</option>
+            </select>
+            <button type="submit" id="select-cipher-btn" class="btn" >
+                Select Cipher
             </button>
         </form>
     </div>
-    <div class="col code-run">
+
+    <div class="flow-arrow">➤</div>
+
+    <div class="action">
+        <form id="token-form" method="post" action="/set-token">
+            <input type="text" name="token" id="token-input" placeholder="Token" required disabled>
+            <button type="submit" id="set-token-btn" class="btn" disabled>
+                Set Initial Token
+            </button>
+        </form>
+    </div>
+
+    <div class="flow-arrow">➤</div>
+
+    <div class="action">
+        <form id="message-form" method="post" action="/send">
+            <input type="text" name="message" id="message-input" placeholder="Message" required disabled>
+            <button type="submit" id="send-msg-btn" class="btn" disabled>
+                Send Message
+            </button>
+        </form>
+    </div>
+</div>
+
+<div class="main-container">
+    <div class="col-40">
+        <div class="code-container" id="sender">
+            <div class="code-header">
+                <h1>
+                    Sender
+                </h1>
+            </div>
+            <div class="code-content code-run" id="sender-cli">
+                <div class="cli-line">
+Nothing to show...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-40" id="receiver">
         <div class="code-container">
             <div class="code-header">
                 <h1>
                     Receiver
                 </h1>
             </div>
+            <div class="code-content code-run" id="receiver-cli">
+                <div class="cli-line">
+Nothing to show...
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
-<script src="../static/js/main.js"></script>
+<script type="module">
+    import init, { generate_noise_field } from "../static/wasm/chaoscrypto_noise.js";
 
+    window.WasmModule = {
+        init,
+        generate_noise_field
+    };
+</script>
+<script src="../static/js/main.js"></script>
 </body>
 </html>
