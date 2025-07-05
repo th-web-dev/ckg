@@ -3,8 +3,8 @@ use js_sys::Array;
 use sha2::{Sha256, Digest}; 
 use crate::shared::*;
 #[wasm_bindgen]
-pub fn generate_noise_field(token: &str, size: usize, scale: f32) -> js_sys::Array {
-    let matrix = generate_noise_matrix(token, size, scale as f64);
+pub fn generate_noise_field(token: &str, size: usize, scale: f64) -> js_sys::Array {
+    let matrix = generate_noise_matrix(token, size, scale);
     let result = js_sys::Array::new();
 
     for row in matrix {

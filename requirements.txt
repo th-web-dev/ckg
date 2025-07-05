@@ -4,3 +4,5 @@ opensimplex
 numpy
 matplotlib
 noise
+maturin
+cffi

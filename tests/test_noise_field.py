@@ -1,11 +1,4 @@
-#import matplotlib.pyplot as plt
-from app.memory import generate_noise_field_opensimplex
+import chaoscrypto_noise
 
-# Token eingeben
-token = "geheimer_token"
-
-# Noise-Feld generieren
-field = generate_noise_field_opensimplex(token, size=100, scale=0.1)
-
-print("Field shape:", field.shape)
-print("First row:", field[0])
+field = chaoscrypto_noise.generate_noise_field_py("token123", 10, 0.1)
+print(field)

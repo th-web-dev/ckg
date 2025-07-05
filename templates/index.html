@@ -1,87 +1,69 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
+    <meta charset="UTF-8">
     <title>ChaosCrypto</title>
     <link href="../static/css/styles.css" rel="stylesheet">
 </head>
 <body>
-<h1>Willkommen bei ChaosCrypto</h1>
-<p>Dies ist eine Demo zur chaotischen Verschlüsselung.</p>
-<div class="actions-bar">
-    <div class="action">
-        <form id="cipher-form" method="post" action="/set-cipher">
-            <select name="cipher" id="cipher-select">
-                <option value="lorenz">Lorenz</option>
-            </select>
-            <button type="submit" id="select-cipher-btn" class="btn" >
-                Select Cipher
-            </button>
-        </form>
-    </div>
+    <header>
+        <h1>Willkommen bei ChaosCrypto</h1>
+        <p>Dies ist eine Demo zur chaotischen Verschlüsselung.</p>
+    </header>
 
-    <div class="flow-arrow">➤</div>
+    <section class="actions-bar">
+        <div class="action">
+            <form id="cipher-form" method="post" action="/set-cipher">
+                <select name="cipher" id="cipher-select">
+                    <option value="lorenz">Lorenz</option>
+                </select>
+                <button type="submit" id="select-cipher-btn" class="btn">Select Cipher</button>
+            </form>
+        </div>
 
-    <div class="action">
-        <form id="token-form" method="post" action="/set-token">
-            <input type="text" name="token" id="token-input" placeholder="Token" required disabled>
-            <button type="submit" id="set-token-btn" class="btn" disabled>
-                Set Initial Token
-            </button>
-        </form>
-    </div>
+        <div class="flow-arrow">➤</div>
 
-    <div class="flow-arrow">➤</div>
+        <div class="action">
+            <form id="token-form" method="post" action="/set-token">
+                <input type="text" name="token" id="token-input" placeholder="Token" required disabled>
+                <button type="submit" id="set-token-btn" class="btn" disabled>Set Initial Token</button>
+            </form>
+        </div>
 
-    <div class="action">
-        <form id="message-form" method="post" action="/send">
-            <input type="text" name="message" id="message-input" placeholder="Message" required disabled>
-            <button type="submit" id="send-msg-btn" class="btn" disabled>
-                Send Message
-            </button>
-        </form>
-    </div>
-</div>
+        <div class="flow-arrow">➤</div>
 
-<div class="main-container">
-    <div class="col-40">
-        <div class="code-container" id="sender">
-            <div class="code-header">
-                <h1>
-                    Sender
-                </h1>
+        <div class="action">
+            <form id="message-form" method="post" action="/send">
+                <input type="text" name="message" id="message-input" placeholder="Message" required disabled>
+                <button type="submit" id="send-msg-btn" class="btn" disabled>Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <main class="main-container">
+        <div class="conversation-container" id="conversation">
+            <div class="conv-item client">
+                <div class="cli-line cli-left">Nachricht gesendet…</div>
             </div>
-            <div class="code-content code-run" id="sender-cli">
-                <div class="cli-line">
-Nothing to show...
-                </div>
+            <div class="conv-item server">
+                <div class="cli-line cli-right">Nachricht empfangen…</div>
             </div>
         </div>
-    </div>
+    </main>
 
-    <div class="col-40" id="receiver">
-        <div class="code-container">
-            <div class="code-header">
-                <h1>
-                    Receiver
-                </h1>
-            </div>
-            <div class="code-content code-run" id="receiver-cli">
-                <div class="cli-line">
-Nothing to show...
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+    <script type="module">
+        import init, {
+            generate_noise_field,
+            rotate_token
+        } from "../static/wasm/chaoscrypto_noise.js";
 
-<script type="module">
-    import init, { generate_noise_field } from "../static/wasm/chaoscrypto_noise.js";
+        window.WasmModule = {
+            init,
+            generate_noise_field,
+            rotate_token
+        };
+    </script>
 
-    window.WasmModule = {
-        init,
-        generate_noise_field
-    };
-</script>
-<script src="../static/js/main.js"></script>
+    <script src="../static/js/main.js"></script>
 </body>
 </html>
